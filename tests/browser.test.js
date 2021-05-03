@@ -8,7 +8,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 5; // 5 minuter
 
 // Det här körs innan vi kör testerna för att säkerställa att Firefox är igång
 beforeAll(async () => {
-console.log(fileUnderTest);
+//console.log(fileUnderTest);
     driver = await new Builder().forBrowser('firefox').build();
     await driver.get(fileUnderTest);
 });
@@ -23,6 +23,21 @@ test('The stack should be empty in the beginning', async () => {
 	expect(stack).toEqual("n/a");
 });
 
+describe('Clicking "Pusha till stacken" when box is empty should not push at all', () => {
+	it('should open a prompt box', async () => {
+		let push = await driver.findElement(By.id('push'));
+		await push.click();
+		let alert = await driver.switchTo().alert();
+		await alert.sendKeys("");
+		await alert.accept();
+	});
+});
+
+test('The stack should be empty after push with empty string', async () => {
+	let stack = await driver.findElement(By.id('top_of_stack')).getText();
+	expect(stack).toEqual("n/a");
+});
+
 describe('Clicking "Pusha till stacken"', () => {
 	it('should open a prompt box', async () => {
 		let push = await driver.findElement(By.id('push'));
@@ -32,3 +47,5 @@ describe('Clicking "Pusha till stacken"', () => {
 		await alert.accept();
 	});
 });
+
+
