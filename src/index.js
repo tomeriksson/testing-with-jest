@@ -15,8 +15,11 @@ window.onload = function () {
 
     push.addEventListener("click", function() {
         var x = prompt("Vad ska vi lägga på stacken?");
-        stack.push(x);
-        display.innerHTML = x;
+        if(x !== ""){
+            stack.push(x);
+            display.innerHTML = x;
+        }
+    
     });
 
     peek.addEventListener("click", function() {
